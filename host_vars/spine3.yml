@@ -1,0 +1,52 @@
+---
+nclu:
+  - add snmp-server listening-address localhost
+  - add routing defaults datacenter
+  - add routing service integrated-vtysh-config
+  - add routing log syslog informational
+  - add routing route 0.0.0.0/0 172.16.30.10
+  - add routing route 10.51.0.0/16 172.16.10.1
+  - add dns nameserver ipv4 10.0.2.3 vrf vagrantvrf
+  - add bond mlag-fw2-lan bond slaves swp46
+  - add bond mlag-fw2-wan bond slaves swp45
+  - add bond mlag-fw3-lan bond slaves swp47
+  - add bond mlag-fw3-wan bond slaves swp48
+  - add bond peerlink bond slaves swp49,swp50
+  - add bond ser-a bond slaves swp1
+  - add bond mlag-fw2-lan clag id 46
+  - add bond mlag-fw2-lan,mlag-fw2-wan,mlag-fw3-lan,mlag-fw3-wan stp bpduguard
+  - add bond mlag-fw2-lan,mlag-fw2-wan,mlag-fw3-lan,mlag-fw3-wan stp portadminedge
+  - add bond mlag-fw2-lan,mlag-fw3-lan,ser-a bridge vids 51-53
+  - add bond mlag-fw2-wan clag id 45
+  - add bond mlag-fw2-wan,mlag-fw3-wan bridge access 10
+  - add bond mlag-fw3-lan clag id 47
+  - add bond mlag-fw3-wan clag id 48
+  - add bond ser-a clag id 2
+  - add bridge bridge ports mlag-fw2-lan,mlag-fw3-lan,ser-a,peerlink,mlag-fw2-wan,mlag-fw3-wan
+  - add bridge bridge vids 10,51-53
+  - add bridge bridge vlan-aware
+  - add interface eth0 vrf mgmt
+  - add interface peerlink.4094 clag peer-ip 169.254.1.1
+  - add interface peerlink.4094 clag sys-mac 44:38:39:FF:FA:01
+  - add interface peerlink.4094 ip address 169.254.1.2/30
+  - add interface swp1
+  - add interface swp45 alias mlag-fw2-wan
+  - add interface swp46 alias mlag-fw2-lan
+  - add interface swp47 alias mlag-fw3-lan
+  - add interface swp48 alias mlag-fw3-wan
+  - add interface swp49-50 post-up 'ip link set $IFACE promisc on'
+  - add interface swp52 ip address 172.16.30.11/24
+  - add loopback lo
+  - add vlan 10 ip address 172.16.10.13/24
+  - add vlan 10 ip address-virtual 00:00:5e:00:01:01 172.16.10.11/24
+  - add vlan 10 vlan-id 10
+  - add vlan 10 vlan-raw-device bridge
+  - add vlan 51 vlan-id 51
+  - add vlan 51 vlan-raw-device bridge
+  - add vlan 52 vlan-id 52
+  - add vlan 52 vlan-raw-device bridge
+  - add vlan 53 vlan-id 53
+  - add vlan 53 vlan-raw-device bridge
+  - add vrf mgmt ip address 127.0.0.1/8
+  - add vrf mgmt,vagrantvrf vrf-table auto
+...
